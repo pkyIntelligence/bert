@@ -21,11 +21,11 @@ def scaled_dot_product_attention(q, k, v, mask):
     """
 
     rank_k = len(k.shape)
-    td_qk = torch.matmul(q, k.transpose(rank_k-2, rank_k-1))
+    matmul_qk = torch.matmul(q, k.transpose(rank_k-2, rank_k-1))
 
     # scale td_qk
     dk = torch.FloatTensor([k.shape[-1]])
-    scaled_attention_logits = td_qk / torch.sqrt(dk)
+    scaled_attention_logits = matmul_qk / torch.sqrt(dk)
 
     # add the mask to the scaled tensor.
     if mask is not None:
